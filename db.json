@@ -1,0 +1,16 @@
+[{
+    "name":"PersonA",
+    "age":25,
+    "img":"/a.jpeg"
+},
+{
+    "name":"PersonB",
+    "age":30,
+    "img":"/lee.jpeg"
+},
+{
+    "name":"PersonC",
+    "age":35,
+    "img":"/Self.jpg"
+}
+]
