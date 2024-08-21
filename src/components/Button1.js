@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Button3 from "./Button3";
+import Log from "./Log";
 
 const Button1 = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [on, setOn] = useState(false);
+ const log = Log(on)
 
   const setToggle = () => {
     setOn(!on);
@@ -16,11 +18,13 @@ const Button1 = () => {
     try {
       const res = await axios.get("http://localhost:5000/0");
       const data = res.data;
-      console.log("button 1 data :", data);
-      setData(data);
+      log("button 1 data :", data);
+      setTimeout(()=>{
+        setData(data);
+        setLoading(false)
+      },1000)
     } catch (error) {
-      console.error("Error :", error);
-    } finally {
+      log("Error :", error);
       setLoading(false);
     }
   };
@@ -30,13 +34,13 @@ const Button1 = () => {
     try {
       const res = await axios.get("http://localhost:5000/1");
       const data = res.data;
-      console.log("button 2 data :", data);
+      log("button 2 data :", data);
       setTimeout(()=>{
         setData(data);
         setLoading(false)
       },5000)
     } catch (error) {
-      console.error("Error :", error);
+      log("Error :", error);
       setLoading(false);
     }
   };
@@ -67,16 +71,20 @@ const Button1 = () => {
           <Button3 />
         </div>
       </div>
-      <div className="bg-gray-200 w-56 h-80 p-4 mt-1 ml-[38px] ">
+      <div className="bg-gray-100 w-56 h-80 p-4 mt-1 ml-[38px] shadow-slate-700 border rounded-md ">
         {loading ? (
           <div className="flex flex-col items-center">
-            <div className="bg-green-300 w-56 h-56 rounded animate-pulse"></div>
+            <div className="bg-green-300 w-56 h-52 rounded animate-pulse"></div>
             <div className="bg-green-300 mt-2 h-6 w-24 rounded animate-pulse"></div>
             <div className="bg-green-300 mt-2 h-5 w-16 rounded animate-pulse"></div>
+            <div className="flex justify-between gap-10">
+            <div className="bg-green-300 mt-2 h-5 w-10 rounded animate-pulse"></div>
+            <div className="bg-green-300 mt-2 h-5 w-10 rounded animate-pulse"></div>
+            </div>
           </div>
         ) : data ? (
           <div className="text-center">
-            <img src={data.img} alt="error.jpeg" className="w-56 h-40 mx-auto" />
+            <img src={data.img} alt="error.jpeg" className="w-56 h-40 mx-auto shadow-slate-700 border rounded-md" />
             <h1 className="mt-2 text-lg font-semibold">Name : {data.name}</h1>
             <h2 className="mt-2 text-md">Age : {data.age}</h2>
             <div className="flex justify-around mt-4">
