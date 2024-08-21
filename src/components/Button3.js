@@ -25,7 +25,7 @@ const Button3 = () => {
         className="bg-red-200 border hover:bg-red-500 border-black rounded-md p-2"
         onClick={button3Data}>C</button>
       <div className="mainDiv mt-1">
-        <div className="bg-gray-400 w-56 h-80 p-2">
+        <div className="bg-gray-200 w-56 h-80 p-2 ml-[38px]">
           {loading ? (
             <div className="skeleton">
               <div className="bg-red-300 w-56 h-56"></div>
