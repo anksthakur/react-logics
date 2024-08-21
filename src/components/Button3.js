@@ -31,10 +31,10 @@ const Button3 = () => {
         <div className="bg-gray-100 w-56 h-80 p-2 ml-[38px] shadow-slate-700 border rounded-md">
           {loading ? (
             <div className="skeleton">
-              <div className="bg-red-300 w-60 h-52"></div>
+              <div className="bg-red-300 w-56 h-56"></div>
               <div className="bg-green-300 mt-2 h-5 w-16 rounded animate-pulse"></div>
             <div className="bg-green-300 mt-2 h-5 w-14 rounded animate-pulse"></div>
-            <div className="flex justify-between gap-10">
+             <div className="flex justify-between gap-5">
             <div className="bg-green-300 mt-2 h-5 w-10 rounded animate-pulse"></div>
             <div className="bg-green-300 mt-2 h-5 w-10 rounded animate-pulse"></div>
             </div>

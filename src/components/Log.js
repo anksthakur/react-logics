@@ -8,7 +8,7 @@ const Log = (logEnable) => {
   }, []);
 
   const customLog = (...arg) => {
-    if (!custom && logEnable) {
+    if (!custom && logEnable) { 
       console.log(...arg);
     }
   };
