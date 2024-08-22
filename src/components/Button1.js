@@ -6,6 +6,8 @@ const Button1 = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [on, setOn] = useState(false);
+  const [error ,setError] = useState();
+  const [active,setActive]= useState(false)
   const log = Log(on);
 
   const setToggle = () => {
@@ -14,15 +16,25 @@ const Button1 = () => {
 
   const button1Data = async () => {
     setLoading(true);
+    const controller = new AbortController();
     try {
-      const res = await axios.get("http://localhost:5000/0");
+      if(active){
+        controller.abort()
+        setActive(false)
+      }
+      const res = await axios.get("http://localhost:5000/0",{
+        signal: controller.signal,
+      });
+      setActive(true)
       const data = res.data;
       log("button 1 data :", data);
-      setTimeout(() => {
-        setData(data);
+
+     setTimeout(() => {
+          setData(data);
         setLoading(false);
       }, 1000);
     } catch (error) {
+      log("request cancel button 1")
       log("Error :", error);
       setLoading(false);
     }
@@ -30,9 +42,18 @@ const Button1 = () => {
 
   const button2Data = async () => {
     setLoading(true);
+    const controller = new AbortController();
     try {
-      const res = await axios.get("http://localhost:5000/1");
+      if(active){
+        controller.abort()
+        setActive(false)
+      }
+      const res = await axios.get("http://localhost:5000/1",{
+      signal:controller.signal,
+      });
+      setActive(true)
       const data = res.data;
+      log("button 2 request cancel")
       log("button 2 data :", data);
       setTimeout(() => {
         setData(data);
@@ -42,17 +63,31 @@ const Button1 = () => {
       log("Error :", error);
       setLoading(false);
     }
-  };
+    };
 
   const button3Data = async () => {
     setLoading(true);
+    const controller = new AbortController();
     try {
-      const res = await axios.get("http://localhost:5000/2");
-      const data = res.data;
-      log("button 3 data :", data);
+      if(active){
+        controller.abort()
+        setActive(false)
+      }
+      const res = await axios.get("http://localhost:5000/2",{
+        signal:controller.signal,
+      });
+      setActive(true)
+      log("button 3 data :", res.data);
+      log("button 3 request cancel")
+     if (res.status === 200){
+      throw  new Error("User Not Found") 
+     } 
+     log("button 3 data :", res.data);
+     const data = res.data;
       setData(data);
     } catch (error) {
       log(error);
+      setError(error.message)
     } finally {
       setLoading(false);
     }
@@ -96,7 +131,9 @@ const Button1 = () => {
                 <div className="bg-gray-300 mt-2 h-5 w-10 rounded animate-pulse"></div>
               </div>
             </div>
-          ) : data ? (
+          ) : error ?(
+              <div className="text-center text-red-500">{error}</div>
+          ): data ? (
             <div className="text-center">
               <img src={data.img} alt="error.jpeg" className="w-72 h-40 mx-auto shadow-slate-700 border rounded-md" />
               <h1 className="mt-2 text-lg font-semibold">Name: {data.name}</h1>
